@@ -1,5 +1,7 @@
 package src.main.entity;
 
+
+
 public class entity{
     
     protected float x,y;

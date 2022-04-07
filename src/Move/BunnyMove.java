@@ -1,10 +1,11 @@
-package Move;
+package src.Move;
+
+import static src.utility.Constants.Compass.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import src.main.View.BunnyView;
-import static utility.Constants.Compass.*;
 
 public class BunnyMove  implements KeyListener {
 
@@ -18,7 +19,6 @@ public class BunnyMove  implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
         
     }
 
@@ -27,23 +27,19 @@ public class BunnyMove  implements KeyListener {
         
         switch(e.getKeyCode()){
             case KeyEvent.VK_W:
-                view.setDirection(UP);
-                view.repaint();
+                view.getGame().getPlayer().setDirection(UP);
                 System.out.println("W");
                 break;
             case KeyEvent.VK_A:
-                view.setDirection(LEFT);
-                view.repaint();
+                view.getGame().getPlayer().setDirection(LEFT);
                 System.out.println("A");
                 break;
             case KeyEvent.VK_S:
-                view.setDirection(DOWN);
-                view.repaint();
+                view.getGame().getPlayer().setDirection(DOWN);
                 System.out.println("S");
                 break;
             case KeyEvent.VK_D:
-                view.setDirection(RIGHT);
-                view.repaint();
+                view.getGame().getPlayer().setDirection(RIGHT);
                 System.out.println("D");
                 break;
         }
@@ -57,7 +53,7 @@ public class BunnyMove  implements KeyListener {
             case KeyEvent.VK_A:
             case KeyEvent.VK_S:
             case KeyEvent.VK_D:
-            view.setMoving(false);
+            view.getGame().getPlayer().setMoving(false);
                 break;
         }
         

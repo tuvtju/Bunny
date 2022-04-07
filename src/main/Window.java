@@ -1,5 +1,8 @@
 package src.main;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+
 import javax.swing.JFrame;
 
 import src.main.View.BunnyView;
@@ -21,6 +24,25 @@ public class Window extends JFrame{
         frame.setResizable(false);
         frame.pack();
         frame.setVisible(true);
+        frame.addWindowFocusListener(new WindowFocusListener(){
+
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                
+                
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+                System.out.println("bye ig");
+                view.getGame().lostFocus();
+
+
+                // TODO Auto-generated method stub
+                
+            }
+            
+        });
     }
 
 

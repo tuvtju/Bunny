@@ -1,16 +1,13 @@
 package src.main.entity;
 
+import static src.utility.Constants.BunnyState.*;
+import static src.utility.Constants.Compass.*;
+
 import java.awt.Graphics;
-
-
-import static utility.Constants.Compass.*;
-import static utility.Constants.BunnyState.*;
-
 import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
+import src.main.Game;
+import src.utility.Load;
 
 public class Player extends entity{
     private BufferedImage[][] Anis;
@@ -18,11 +15,17 @@ public class Player extends entity{
     private int Action = IDLE;
     private int charDir = -1;
     private boolean moving = false;
-    private BufferedImage spritesheet;
+    private int height;
+    private int width;
+    private float pSpeed = 1.0f * Game.SCALE;
+    //private BufferedImage spritesheet;
 
 
-    public Player(float x,float y) {
+    public Player(float x,float y, int height, int width) {
         super(x, y);
+
+        this.height= height;
+        this.width = width;
         AniIterator();
     }
 
@@ -34,14 +37,14 @@ public class Player extends entity{
     }
 
     public void render(Graphics canvas){
-        canvas.drawImage(Anis[Action][aniIndex], (int)x, (int)y, 512,256, null);
+        canvas.drawImage(Anis[Action][aniIndex], (int)x, (int)y, height, width, null);
+        update();
 
     }
 
     public void setDirection(int Dir){
         this.charDir = Dir;
         moving = true;
-
     }
 
 
@@ -73,16 +76,16 @@ public class Player extends entity{
         if(moving){
             switch(charDir){
             case LEFT:
-                x -=3;
+                x -=pSpeed;
                 break;
             case UP:
-                y -=3;
+                y -=pSpeed;
                 break;
             case RIGHT:
-                x +=3;
+                x +=pSpeed;
                 break;
             case DOWN:
-                y +=3;
+                y +=pSpeed;
                 break;
             }
             
@@ -90,35 +93,17 @@ public class Player extends entity{
     }
     
 
-    private void Import(){
-        try{
-                
-            spritesheet = ImageIO.read(new FileInputStream("res/bunny_char.png"));
-                
-                
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
 
 
-    private void AniIterator() {
+    private void AniIterator() {   
+        BufferedImage spritesheet = Load.getSpriteSheet(Load.PLAYER_SPRITE);
 
         Anis = new BufferedImage[5][4];
-            for (int row = 0; row < Anis.length; row++) {
-                for (int col = 0; col < Anis[row].length; col++) {
-                Anis[row][col] = spritesheet.getSubimage(col*64, row*32, 64, 32);
-                }
+        for (int row = 0; row < Anis.length; row++) {
+            for (int col = 0; col < Anis[row].length; col++) {
+            Anis[row][col] = spritesheet.getSubimage(col*64, row*32, 64, 32);
             }
-        
-        
-        
-
-
-        
-            
+        }
     }
         
        

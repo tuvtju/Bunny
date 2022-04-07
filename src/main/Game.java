@@ -2,6 +2,7 @@ package src.main;
 
 import java.awt.Graphics;
 
+import src.Levels.levelManager;
 import src.main.View.BunnyView;
 
 import src.main.entity.Player;
@@ -14,19 +15,32 @@ public class Game implements Runnable{
     private final int FPS = 120;
     private final int UPS = 200;
     private Player player;
+    private levelManager manager;
+
+
+    public static final int TILES_DEFAULT = 32;
+    public static final float SCALE = 3.0f;
+    public static final int WIDTH = 26;
+    public static final int HEIGHT = 14;
+    public static final int TILES = (int)(TILES_DEFAULT * SCALE);
+    public static final int GAMEWIDTH = WIDTH * TILES;
+    public static final int GAMEHEIGHT = HEIGHT * TILES;
+
+
 
     public Game() {
-        
-        view = new BunnyView();
+        initClass();
+        view = new BunnyView(this);
         frame = new Window(view);
         view.requestFocus();
-        initClass();
+        
         Loop();
        
     }
 
     private void initClass() {
-        //player = new Player(0,0);
+        player = new Player(0,0,(int)(2*64*SCALE), (int)(2*32*SCALE));
+        manager = new levelManager(this);
     }
 
     private void Loop(){
@@ -34,13 +48,15 @@ public class Game implements Runnable{
         thread.start();
     }
 
+
     public void update(){
-        view.updateGame();
+        manager.update();
     }
 
-    public void render(Graphics g){
-        //player.render(g);
 
+    public void render(Graphics g){
+        manager.draw(g);
+        player.render(g);
     }
 
     @Override
@@ -81,6 +97,10 @@ public class Game implements Runnable{
             }
         }
         
+    }
+
+    public void lostFocus(){
+        player.setMoving(false);
     }
 
     public Player getPlayer(){
