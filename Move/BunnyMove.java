@@ -1,4 +1,4 @@
-package src.main.Move;
+package Move;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -27,19 +27,23 @@ public class BunnyMove  implements KeyListener {
         
         switch(e.getKeyCode()){
             case KeyEvent.VK_W:
-                view.getGame().getPlayer().setDirection(UP);
+                view.setDirection(UP);
+                view.repaint();
                 System.out.println("W");
                 break;
             case KeyEvent.VK_A:
-                view.getGame().getPlayer().setDirection(LEFT);
+                view.setDirection(LEFT);
+                view.repaint();
                 System.out.println("A");
                 break;
             case KeyEvent.VK_S:
-                view.getGame().getPlayer().setDirection(DOWN);
+                view.setDirection(DOWN);
+                view.repaint();
                 System.out.println("S");
                 break;
             case KeyEvent.VK_D:
-                view.getGame().getPlayer().setDirection(RIGHT);
+                view.setDirection(RIGHT);
+                view.repaint();
                 System.out.println("D");
                 break;
         }
@@ -53,7 +57,7 @@ public class BunnyMove  implements KeyListener {
             case KeyEvent.VK_A:
             case KeyEvent.VK_S:
             case KeyEvent.VK_D:
-            view.getGame().getPlayer().setMoving(false);
+            view.setMoving(false);
                 break;
         }
         

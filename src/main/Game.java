@@ -16,17 +16,17 @@ public class Game implements Runnable{
     private Player player;
 
     public Game() {
-        initClass();
-        view = new BunnyView(this);
+        
+        view = new BunnyView();
         frame = new Window(view);
         view.requestFocus();
-       
+        initClass();
         Loop();
        
     }
 
     private void initClass() {
-        player = new Player(0,0);
+        //player = new Player(0,0);
     }
 
     private void Loop(){
@@ -35,11 +35,11 @@ public class Game implements Runnable{
     }
 
     public void update(){
-        player.update();
+        view.updateGame();
     }
 
     public void render(Graphics g){
-        player.render(g);
+        //player.render(g);
 
     }
 

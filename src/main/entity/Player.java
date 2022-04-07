@@ -18,6 +18,7 @@ public class Player extends entity{
     private int Action = IDLE;
     private int charDir = -1;
     private boolean moving = false;
+    private BufferedImage spritesheet;
 
 
     public Player(float x,float y) {
@@ -88,24 +89,32 @@ public class Player extends entity{
         }
     }
     
-    private void AniIterator() {
 
-        
+    private void Import(){
         try{
-           
-            BufferedImage spritesheet = ImageIO.read(new FileInputStream("res/bunny_char.png"));
-            
-            Anis = new BufferedImage[5][4];
-            for (int row = 0; row < Anis.length; row++) {
-                for (int col = 0; col < Anis[row].length; col++) {
-                Anis[row][col] = spritesheet.getSubimage(col*64, row*32, 64, 32);
-                }
-            }
+                
+            spritesheet = ImageIO.read(new FileInputStream("res/bunny_char.png"));
+                
+                
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+
+    private void AniIterator() {
+
+        Anis = new BufferedImage[5][4];
+            for (int row = 0; row < Anis.length; row++) {
+                for (int col = 0; col < Anis[row].length; col++) {
+                Anis[row][col] = spritesheet.getSubimage(col*64, row*32, 64, 32);
+                }
+            }
+        
+        
+        
 
 
         
