@@ -4,14 +4,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import src.main.View.BunnyView;
+import static utility.Constants.Compass.*;
 
 public class BunnyMove  implements KeyListener {
 
-    private BunnyView model;
+    private BunnyView view;
 
 
-    public BunnyMove(BunnyView view) {
-        this.model = view;
+    public BunnyMove(BunnyView bunnyView) {
+        this.view = bunnyView;
     }
     
 
@@ -25,25 +26,20 @@ public class BunnyMove  implements KeyListener {
     public void keyPressed(KeyEvent e) {
         
         switch(e.getKeyCode()){
-        
             case KeyEvent.VK_W:
-                model.deltaY(-5);
-                model.repaint();
+                view.getGame().getPlayer().setDirection(UP);
                 System.out.println("W");
                 break;
             case KeyEvent.VK_A:
-                model.deltaX(-5);
-                model.repaint();
+                view.getGame().getPlayer().setDirection(LEFT);
                 System.out.println("A");
                 break;
             case KeyEvent.VK_S:
-                model.deltaY(5);
-                model.repaint();
+                view.getGame().getPlayer().setDirection(DOWN);
                 System.out.println("S");
                 break;
             case KeyEvent.VK_D:
-                model.deltaX(5);
-                model.repaint();
+                view.getGame().getPlayer().setDirection(RIGHT);
                 System.out.println("D");
                 break;
         }
@@ -52,7 +48,14 @@ public class BunnyMove  implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        // TODO Auto-generated method stub
+        switch(e.getKeyCode()){
+            case KeyEvent.VK_W:
+            case KeyEvent.VK_A:
+            case KeyEvent.VK_S:
+            case KeyEvent.VK_D:
+            view.getGame().getPlayer().setMoving(false);
+                break;
+        }
         
     }
     
