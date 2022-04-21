@@ -10,9 +10,9 @@ import src.main.Game;
 
 public class Load {
 
-    public static final String PLAYER_SPRITE = "bunny.png";
+    public static final String PLAYER_SPRITE = "b.png";
     public static final String LEVEL_SPRITE = "outside.png";
-    public static final String LEVEL_ONE = "level_one.png";
+    public static final String LEVEL_ONE = "level_one_data.png";
 
 
 

@@ -27,20 +27,18 @@ public class BunnyMove  implements KeyListener {
         
         switch(e.getKeyCode()){
             case KeyEvent.VK_W:
-                view.getGame().getPlayer().setDirection(UP);
-                System.out.println("W");
+            view.getGame().getPlayer().setUp(true);
+            System.out.println("w");
                 break;
             case KeyEvent.VK_A:
-                view.getGame().getPlayer().setDirection(LEFT);
-                System.out.println("A");
+            view.getGame().getPlayer().setLeft(true);
                 break;
             case KeyEvent.VK_S:
-                view.getGame().getPlayer().setDirection(DOWN);
-                System.out.println("S");
+            view.getGame().getPlayer().setDown(true);
                 break;
             case KeyEvent.VK_D:
-                view.getGame().getPlayer().setDirection(RIGHT);
-                System.out.println("D");
+            view.getGame().getPlayer().setRight(true);
+            System.out.println("d");
                 break;
         }
         
@@ -50,10 +48,16 @@ public class BunnyMove  implements KeyListener {
     public void keyReleased(KeyEvent e) {
         switch(e.getKeyCode()){
             case KeyEvent.VK_W:
+            view.getGame().getPlayer().setUp(false);
+                break;
             case KeyEvent.VK_A:
+            view.getGame().getPlayer().setLeft(false);
+                break;
             case KeyEvent.VK_S:
+            view.getGame().getPlayer().setDown(false);
+                break;
             case KeyEvent.VK_D:
-            view.getGame().getPlayer().setMoving(false);
+            view.getGame().getPlayer().setRight(false);
                 break;
         }
         

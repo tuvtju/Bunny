@@ -1,6 +1,7 @@
 package src.main;
 
 import java.awt.Graphics;
+import java.lang.System.Logger.Level;
 
 import src.Levels.levelManager;
 import src.main.View.BunnyView;
@@ -39,8 +40,9 @@ public class Game implements Runnable{
     }
 
     private void initClass() {
-        player = new Player(0,0,(int)(2*64*SCALE), (int)(2*32*SCALE));
         manager = new levelManager(this);
+        player = new Player(1000,400,(int)(2*64*SCALE), (int)(2*32*SCALE));
+        player.loadlvlData(manager.getCurrentLevel().getLevel());
     }
 
     private void Loop(){
@@ -52,6 +54,8 @@ public class Game implements Runnable{
     public void update(){
         manager.update();
     }
+
+    
 
 
     public void render(Graphics g){
@@ -100,7 +104,7 @@ public class Game implements Runnable{
     }
 
     public void lostFocus(){
-        player.setMoving(false);
+        player.resetDir();
     }
 
     public Player getPlayer(){

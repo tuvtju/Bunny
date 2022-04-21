@@ -34,11 +34,11 @@ public class Window extends JFrame{
 
             @Override
             public void windowLostFocus(WindowEvent e) {
-                System.out.println("bye ig");
+                System.out.println("pop up again");
                 view.getGame().lostFocus();
 
 
-                // TODO Auto-generated method stub
+                // 18:30 GRAVITY
                 
             }
             

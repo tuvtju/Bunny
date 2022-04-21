@@ -48,4 +48,8 @@ public class levelManager {
 
     }
     
+    public level getCurrentLevel(){
+        return levelOne;
+    }
+
 }
