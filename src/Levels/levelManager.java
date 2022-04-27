@@ -1,6 +1,7 @@
 package src.Levels;
 
 import src.main.Game;
+import src.main.entity.Carrot;
 import src.utility.Load;
 
 import java.awt.image.BufferedImage;
@@ -11,6 +12,7 @@ public class levelManager {
     private Game game;
     private BufferedImage[] levelsprite;
     private level levelOne;
+    private Carrot carrot;
     
     
     public levelManager(Game game){
@@ -27,7 +29,7 @@ public class levelManager {
         for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 12; col++) {
                 int index = row*12 + col;
-                levelsprite[index] = sheet.getSubimage(col*32, row*32, 32, 32);
+                    levelsprite[index] = sheet.getSubimage(col*32, row*32, 32, 32);
                 
             }            
         }
@@ -36,7 +38,7 @@ public class levelManager {
 
     public void draw(Graphics canvas){
         for(int row = 0; row < Game.HEIGHT; row ++)
-            for (int col = 0; col < Game.WIDTH; col++) {
+            for (int col = 0; col < levelOne.getLevel()[0].length; col++) {
                 int index = levelOne.getIndex(col, row);
                 canvas.drawImage(levelsprite[index],col*Game.TILES,row*Game.TILES,Game.TILES,Game.TILES,null);
             }
@@ -51,5 +53,8 @@ public class levelManager {
     public level getCurrentLevel(){
         return levelOne;
     }
+
+
+
 
 }

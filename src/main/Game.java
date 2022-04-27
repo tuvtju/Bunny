@@ -5,8 +5,9 @@ import java.lang.System.Logger.Level;
 
 import src.Levels.levelManager;
 import src.main.View.BunnyView;
-
+import src.main.entity.Carrot;
 import src.main.entity.Player;
+import src.utility.Load;
 
 public class Game implements Runnable{
 
@@ -17,6 +18,8 @@ public class Game implements Runnable{
     private final int UPS = 200;
     private Player player;
     private levelManager manager;
+    private Carrot carrot;
+
 
 
     public static final int TILES_DEFAULT = 32;
@@ -41,7 +44,8 @@ public class Game implements Runnable{
 
     private void initClass() {
         manager = new levelManager(this);
-        player = new Player(1000,400,(int)(2*64*SCALE), (int)(2*32*SCALE));
+        player = new Player(1000,600,(int)(2*64*SCALE), (int)(2*32*SCALE));
+        carrot = new Carrot(1000,600,(int)(1*32*SCALE), (int)(1*32*SCALE));
         player.loadlvlData(manager.getCurrentLevel().getLevel());
     }
 
@@ -53,14 +57,20 @@ public class Game implements Runnable{
 
     public void update(){
         manager.update();
+        player.update();
+       
+        
+        
     }
 
-    
-
+   
 
     public void render(Graphics g){
         manager.draw(g);
+        carrot.draw(g);
         player.render(g);
+        
+        
     }
 
     @Override
@@ -95,7 +105,7 @@ public class Game implements Runnable{
 
             if(System.currentTimeMillis() -lastcheck >= 1000){
                 lastcheck = System.currentTimeMillis();
-                System.out.println("FPS: " + frames + "  | UPS: " + update);
+                System.out.println("FPS: " + frames + "  | UPS: " + update + " " );
                 frames = 0;
                 update = 0;
             }

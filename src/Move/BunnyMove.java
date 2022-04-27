@@ -1,6 +1,5 @@
 package src.Move;
 
-import static src.utility.Constants.Compass.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -26,19 +25,17 @@ public class BunnyMove  implements KeyListener {
     public void keyPressed(KeyEvent e) {
         
         switch(e.getKeyCode()){
-            case KeyEvent.VK_W:
-            view.getGame().getPlayer().setUp(true);
-            System.out.println("w");
-                break;
             case KeyEvent.VK_A:
             view.getGame().getPlayer().setLeft(true);
-                break;
-            case KeyEvent.VK_S:
-            view.getGame().getPlayer().setDown(true);
+            System.out.println("Left");
                 break;
             case KeyEvent.VK_D:
             view.getGame().getPlayer().setRight(true);
-            System.out.println("d");
+            System.out.println("Right");
+                break;
+            case KeyEvent.VK_SPACE:
+            view.getGame().getPlayer().setJump(true);
+            System.out.println("Weeee!");
                 break;
         }
         
@@ -47,17 +44,14 @@ public class BunnyMove  implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         switch(e.getKeyCode()){
-            case KeyEvent.VK_W:
-            view.getGame().getPlayer().setUp(false);
-                break;
             case KeyEvent.VK_A:
             view.getGame().getPlayer().setLeft(false);
                 break;
-            case KeyEvent.VK_S:
-            view.getGame().getPlayer().setDown(false);
-                break;
             case KeyEvent.VK_D:
             view.getGame().getPlayer().setRight(false);
+                break;
+            case KeyEvent.VK_SPACE:
+            view.getGame().getPlayer().setJump(false);
                 break;
         }
         

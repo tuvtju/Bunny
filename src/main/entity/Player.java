@@ -1,7 +1,7 @@
 package src.main.entity;
 
 import static src.utility.Constants.BunnyState.*;
-import static src.utility.Constants.Compass.*;
+
 import static src.utility.helpMethods.*;
 
 import java.awt.Graphics;
@@ -15,22 +15,23 @@ import src.utility.Load;
 public class Player extends entity{
     private BufferedImage[][] Anis;
     private int aniTick, aniIndex, aniSpeed = 15;
-    private int Action = IDLE;
+    private int Action = IDLE_RIGHT;
     private boolean moving = false;
-    private boolean left, up, right, down, jump;
+    private boolean left, right, Jump;
     private float pSpeed = 1.0f * Game.SCALE;
+    private boolean Dir = false;
 
     //Jumping Gravity
     private float airSpeed = 0f;
     private float gravity = 0.08f * Game.SCALE;
-    private float jumpSpeed = -5.0f * Game.SCALE;
+    private float jumpSpeed = -3.7f * Game.SCALE;
     private float hitFall = 0.5f * Game.SCALE;
-    private boolean inAir = false;
+    private boolean inAir = true;
 
     private int[][] level;
     private float xDrawhitbox = 28 * Game.SCALE;
     private float yDrawhitbox = 18 * Game.SCALE;
-
+ 
     //private BufferedImage spritesheet;
 
 
@@ -50,7 +51,7 @@ public class Player extends entity{
 
     public void render(Graphics canvas){
         canvas.drawImage(Anis[Action][aniIndex], (int)( hitBox.x - xDrawhitbox), (int)(hitBox.y - yDrawhitbox), width, height, null);
-        drawHitBox(canvas);
+        //drawHitBox(canvas);
         update();
 
     }
@@ -72,20 +73,42 @@ public class Player extends entity{
         
     public void setAni(){
         if(moving){
-            Action = RUNNING;
+            if(left){
+                Action = RUNNING_LEFT;
+                Dir = true;
+            }else{
+                Action = RUNNING_RIGHT;
+                Dir = false;
+            }
         }else{
-            Action = IDLE;
+           if(Dir)
+                Action = IDLE_LEFT;
+            else
+                Action = IDLE_RIGHT;
         }
     }
  
 
     private void UpdatePos() {
+
         moving = false;
+        if(Jump){
+            jump();
+        }
+
+        
 
         if(!left && !right && !inAir)
             return;
 
         float xSpeed = 0;
+
+        if(!inAir){
+            if(!onFloor(hitBox, level) )
+                inAir = true;
+        }
+
+        
 
         if(left && !right)
             xSpeed = -pSpeed;
@@ -93,32 +116,41 @@ public class Player extends entity{
             xSpeed = pSpeed;
 
         if(inAir){
-            if(movable(hitBox.x, hitBox.y + airSpeed,hitBox.width,hitBox.height,level)){
-                hitBox.y += airSpeed;
+            if(movable(hitBox.x, (hitBox.y + airSpeed) , hitBox.width, hitBox.height, level)){
+                hitBox.y += airSpeed; 
                 airSpeed += gravity;
                 updatexPos(xSpeed);
             }else{
                 hitBox.y = GetRooforFloor(hitBox,airSpeed);
+                if(airSpeed > 0)
+                    resetInAir();
+                else 
+                     airSpeed = hitFall;
+                updatexPos(xSpeed); 
             }
-        }else{
+
+        }else
             updatexPos(xSpeed);
-        }
         
 
-        /*if(movable(x + xSpeed, y + ySpeed, width, height, level)){
-            this.x += xSpeed;
-            this.y += ySpeed;
-            moving = true;
-        }*/
-
-        /*if(movable(hitBox.x + xSpeed, hitBox.y, hitBox.width, hitBox.height, level)){
-            hitBox.x += xSpeed;
-        }*/
-            
+        moving = true;
+          
             
     }
     
 
+
+    private void resetInAir() {
+        inAir = false;
+        airSpeed = 0;
+    }
+
+    private void jump() {
+        if(inAir)
+            return;
+        inAir = true;
+        airSpeed = jumpSpeed;
+    }
 
 
     private void updatexPos(float xSpeed) {
@@ -134,7 +166,7 @@ public class Player extends entity{
     private void AniIterator() {   
         BufferedImage spritesheet = Load.getSpriteSheet(Load.PLAYER_SPRITE);
 
-        Anis = new BufferedImage[5][4];
+        Anis = new BufferedImage[4][4];
         for (int row = 0; row < Anis.length; row++) {
             for (int col = 0; col < Anis[row].length; col++) {
             Anis[row][col] = spritesheet.getSubimage(col*64, row*32, 64, 32);
@@ -151,10 +183,7 @@ public class Player extends entity{
     public void resetDir(){
         left = false;
         right = false;
-        up = false;
-        down = false;
     }
-
 
     
 
@@ -167,16 +196,6 @@ public class Player extends entity{
         this.left = left;
     }
 
-    public boolean isUp() {
-        return this.up;
-    }
-
-
-
-    public void setUp(boolean up) {
-        this.up = up;
-    }
-
     public boolean isRight() {
         return this.right;
     }
@@ -187,11 +206,9 @@ public class Player extends entity{
         this.right = right;
     }
 
-    public boolean isDown() {
-        return this.down;
+    public void setJump(boolean jump) {
+        this.Jump = jump;
     }
 
-    public void setDown(boolean down) {
-        this.down = down;
-    }
+
 }

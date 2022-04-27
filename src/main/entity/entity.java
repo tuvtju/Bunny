@@ -21,6 +21,7 @@ public class entity{
         getHitBox();
     }
 
+    
     protected void drawHitBox(Graphics g){
         //debugging hitBox
         g.setColor(Color.RED);
@@ -31,12 +32,6 @@ public class entity{
     protected void initHitBox(float x, float y, float width, float height) {
         hitBox = new Rectangle2D.Float(x, y, width, height);
     }
-
-   /* public void updateHitBox(){
-        hitBox.x = (int) x;
-        hitBox.y = (int) y;
-
-    }*/
 
     public Rectangle2D.Float getHitBox() {
         return this.hitBox;

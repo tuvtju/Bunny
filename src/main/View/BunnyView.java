@@ -37,6 +37,7 @@ public class BunnyView extends JPanel{
     }
 
     public void updateGame() {
+        game.update();
     }
     
     
@@ -45,6 +46,7 @@ public class BunnyView extends JPanel{
 
 
         game.render(g);
+        
 
        
     }
