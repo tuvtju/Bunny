@@ -5,9 +5,7 @@ import static src.utility.Constants.BunnyState.*;
 import static src.utility.helpMethods.*;
 
 import java.awt.Graphics;
-import java.awt.geom.Rectangle2D.Float;
 import java.awt.image.BufferedImage;
-
 
 import src.main.Game;
 import src.utility.Load;
@@ -28,15 +26,20 @@ public class Player extends entity{
     private float hitFall = 0.5f * Game.SCALE;
     private boolean inAir = true;
 
+
     private int[][] level;
     private float xDrawhitbox = 28 * Game.SCALE;
     private float yDrawhitbox = 18 * Game.SCALE;
+    public static boolean remove = false;
+
+    public static int carrots;
  
-    //private BufferedImage spritesheet;
+
 
 
     public Player(float x,float y, int width, int height) {
         super(x, y, width, height);
+        //resizes teh hitbox
         initHitBox(x, y, 20 * Game.SCALE,19 * Game.SCALE);
         AniIterator();
     }
@@ -50,6 +53,9 @@ public class Player extends entity{
     }
 
     public void render(Graphics canvas){
+        if(remove){
+            remove = false;
+        }
         canvas.drawImage(Anis[Action][aniIndex], (int)( hitBox.x - xDrawhitbox), (int)(hitBox.y - yDrawhitbox), width, height, null);
         //drawHitBox(canvas);
         update();
@@ -58,7 +64,7 @@ public class Player extends entity{
 
 
 
-
+    //manges the animation speed
     private void updateAniTick() {
             aniTick++;
             if(aniTick >= aniSpeed){
@@ -70,7 +76,9 @@ public class Player extends entity{
                 }
             }
         }
-        
+
+
+    //sets animation depending on action and direction
     public void setAni(){
         if(moving){
             if(left){
@@ -89,6 +97,7 @@ public class Player extends entity{
     }
  
 
+    // gives new postion depending on movebale and if in air
     private void UpdatePos() {
 
         moving = false;
@@ -109,12 +118,13 @@ public class Player extends entity{
         }
 
         
-
+        //makes bunny stand still if both A and D is pressed, and continues to move in the pressed key if other is released
         if(left && !right)
             xSpeed = -pSpeed;
         else if(right && !left)
             xSpeed = pSpeed;
 
+        // makes you fall if youre in air/ not on floor
         if(inAir){
             if(movable(hitBox.x, (hitBox.y + airSpeed) , hitBox.width, hitBox.height, level)){
                 hitBox.y += airSpeed; 
@@ -128,6 +138,11 @@ public class Player extends entity{
                      airSpeed = hitFall;
                 updatexPos(xSpeed); 
             }
+            if(Carrot(hitBox.x, (hitBox.y + airSpeed), level)){
+                remove = true;
+                //makes carrot counter 'carrots' go up by one
+                carrots += 1;
+            }
 
         }else
             updatexPos(xSpeed);
@@ -138,7 +153,6 @@ public class Player extends entity{
             
     }
     
-
 
     private void resetInAir() {
         inAir = false;
@@ -159,10 +173,16 @@ public class Player extends entity{
         }else{
             hitBox.x = GetWall(hitBox,xSpeed);
         }
+
+        if(Carrot(hitBox.x + xSpeed, hitBox.y, level)){
+            remove = true;
+            //makes carrot counter 'carrots' go up by one
+            carrots += 1;
+        }
     }
 
     
-
+    //Goes through all sprites in the spritesheet and creates sub images for each
     private void AniIterator() {   
         BufferedImage spritesheet = Load.getSpriteSheet(Load.PLAYER_SPRITE);
 

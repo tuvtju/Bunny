@@ -1,11 +1,14 @@
 package src.main;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
-import java.lang.System.Logger.Level;
+
+import java.awt.image.BufferedImage;
 
 import src.Levels.levelManager;
 import src.main.View.BunnyView;
-import src.main.entity.Carrot;
+import src.main.View.Window;
 import src.main.entity.Player;
 import src.utility.Load;
 
@@ -18,7 +21,6 @@ public class Game implements Runnable{
     private final int UPS = 200;
     private Player player;
     private levelManager manager;
-    private Carrot carrot;
 
 
 
@@ -30,22 +32,28 @@ public class Game implements Runnable{
     public static final int GAMEWIDTH = WIDTH * TILES;
     public static final int GAMEHEIGHT = HEIGHT * TILES;
 
+    private BufferedImage background;
+    private BufferedImage carrot;
+
 
 
     public Game() {
         initClass();
+        background = Load.getSpriteSheet(Load.BACKGROUND);
+        carrot = Load.getSpriteSheet(Load.CARROT_SPRITE);
         view = new BunnyView(this);
         frame = new Window(view);
         view.requestFocus();
+
         
         Loop();
        
     }
 
+    // creates needed objects
     private void initClass() {
         manager = new levelManager(this);
         player = new Player(1000,600,(int)(2*64*SCALE), (int)(2*32*SCALE));
-        carrot = new Carrot(1000,600,(int)(1*32*SCALE), (int)(1*32*SCALE));
         player.loadlvlData(manager.getCurrentLevel().getLevel());
     }
 
@@ -55,19 +63,16 @@ public class Game implements Runnable{
     }
 
 
-    public void update(){
-        manager.update();
-        player.update();
-       
-        
-        
-    }
 
    
-
+    // renders the graphics of all elemnts order is necesery
     public void render(Graphics g){
+        g.drawImage(background, 0, 0, GAMEWIDTH, GAMEHEIGHT,null);
         manager.draw(g);
-        carrot.draw(g);
+        g.drawImage(carrot, 50, 20, TILES * 2, TILES*2, null);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Sans",Font.BOLD,50));
+        g.drawString("x" + Player.carrots, 160, 200);
         player.render(g);
         
         
@@ -76,15 +81,22 @@ public class Game implements Runnable{
     @Override
     public void run() {
 
-        double timePerFrame = 1000000000.0/FPS;
-        double timePerUpdate = 1000000000.0/UPS;
+        //makes the game smooth 
+
+       
+
+        long lastcheck = System.currentTimeMillis();
         long previousTime = System.nanoTime();
+
         int frames = 0;
         int update = 0;
-        long lastcheck = System.currentTimeMillis();
+        
+        double timePerFrame = 1000000000.0/FPS;
+        double timePerUpdate = 1000000000.0/UPS;
 
         double deltaU = 0;
         double deltaF = 0;
+
         while(true){
 
             long currentTime = System.nanoTime();
@@ -113,9 +125,11 @@ public class Game implements Runnable{
         
     }
 
+    // makes sure player stands still when focus is lost
     public void lostFocus(){
         player.resetDir();
     }
+
 
     public Player getPlayer(){
         return player;

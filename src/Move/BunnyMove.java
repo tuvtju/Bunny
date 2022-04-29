@@ -21,6 +21,7 @@ public class BunnyMove  implements KeyListener {
         
     }
 
+    //moves bunny and sets boleans
     @Override
     public void keyPressed(KeyEvent e) {
         

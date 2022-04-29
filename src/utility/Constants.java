@@ -2,6 +2,7 @@ package src.utility;
 
 public class Constants {
     
+    //Constants for bunny animation
 
     public static class BunnyState {
         public static final int IDLE_RIGHT = 0;
@@ -17,8 +18,7 @@ public class Constants {
                 return 4;
             case RUNNING_RIGHT:
             case RUNNING_LEFT:
-                return 3;
-            case default:
+            default:
                 return 3;
             
 

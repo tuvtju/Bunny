@@ -10,22 +10,19 @@ import static src.main.Game.GAMEHEIGHT;
 import static src.main.Game.GAMEWIDTH;
 
 import src.main.Game;
-import src.main.entity.Player;
 
 import java.awt.Dimension;
 
 
 
 public class BunnyView extends JPanel{
-    public Player player;
+    
     private Game game;
     
     
     public BunnyView(Game game) {
         this.game = game; 
         setGameSize();
-  
-        
         addKeyListener(new BunnyMove(this));
 
     }
@@ -36,11 +33,8 @@ public class BunnyView extends JPanel{
 
     }
 
-    public void updateGame() {
-        game.update();
-    }
     
-    
+    //paints the game
     public void paint(Graphics g){
         super.paint(g);
 

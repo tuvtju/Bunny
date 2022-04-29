@@ -1,11 +1,9 @@
-package src.main;
+package src.main.View;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
 import javax.swing.JFrame;
-
-import src.main.View.BunnyView;
 
 public class Window extends JFrame{
 
@@ -14,9 +12,7 @@ public class Window extends JFrame{
     public Window(BunnyView view){
         
           
-        // The JFrame is the "root" application window.
-        // We here set som properties of the main window, 
-        // and tell it to display our tetrisView
+        // Creats Jframe and checks focus
         JFrame frame = new JFrame(WINDOW_TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(view);
@@ -38,7 +34,7 @@ public class Window extends JFrame{
                 view.getGame().lostFocus();
 
 
-                // 18:30 GRAVITY
+                
                 
             }
             

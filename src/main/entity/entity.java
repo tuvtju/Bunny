@@ -1,8 +1,6 @@
 package src.main.entity;
 
-import java.awt.Rectangle;
 import java.awt.geom.*;
-import java.text.CollationElementIterator;
 import java.awt.Color;
 import java.awt.Graphics;
 
@@ -21,7 +19,9 @@ public class entity{
         getHitBox();
     }
 
-    
+    //manages hitbox
+
+
     protected void drawHitBox(Graphics g){
         //debugging hitBox
         g.setColor(Color.RED);

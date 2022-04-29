@@ -12,6 +12,13 @@ public class level {
 
     }
 
+    public int setIndex(int x,int y){
+        return level[y][x];
+
+    }
+
+
+
     public int[][] getLevel(){
         return level;
     }
